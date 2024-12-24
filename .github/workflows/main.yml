@@ -1,0 +1,29 @@
+name: Run pytest
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest  # 指定运行环境，ubuntu-latest 是默认环境
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2  # 用于检出代码
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.9'  # 设置 Python 版本
+
+    - name: Install dependencies
+      run: |
+        pip install -r requirements.txt  # 安装项目依赖
+
+    - name: Run tests
+      run: |
+        pytest --maxfail=1 --disable-warnings -q  # 运行 pytest 测试
